@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  background: url('./assets/todolist-image.jpg')
+    no-repeat center center fixed;
+  /* -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 1; */
+}
+
+.shadow-box {
+  -webkit-box-shadow: 0px 0px 30px -10px rgba(71, 114, 254, 0.3);
+  -moz-box-shadow: 0px 0px 30px -10px rgba(71, 114, 254, 0.3);
+  box-shadow: 0px 0px 30px -10px rgba(71, 114, 254, 0.3);
+}
+
+input[type=text]{
+  background-color: #fefefe;
+  height: 60px;
+  padding-left: 20px;
+  outline: none;
+}
+
+.btn-todo{
+  height: 60px !important;
+  background-color: #FFC401 !important;
+  color: black !important;
+  font-weight: 600 !important;
+  border: none !important;
+  width: 10vw !important;
+}
+
+.border-invalid{
+  border: 2px solid red !important;
+}

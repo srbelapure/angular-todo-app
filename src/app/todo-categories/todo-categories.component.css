@@ -1,0 +1,30 @@
+.card{
+    border: none;
+    border-left: 5px solid rgb(150, 143, 143);
+    margin-top: 50px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    
+}
+
+.category-tools{
+    display: none;
+}
+
+.category-tools small{
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.categories-list .card:hover{
+    cursor: pointer;
+    background-color: #f8f8f8;
+}
+
+.categories-list .card:hover .category-tools{
+    display: inline;
+}
+
+.bg-danger{
+    margin-top: 10px;
+}

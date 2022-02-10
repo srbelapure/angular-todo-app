@@ -1,0 +1,61 @@
+<div class="row justify-content-center mb-3">
+    <div class="col-md-4 text-center">
+        <h1>TODO LISTS</h1>
+        <p class="text-info">
+            This is our ToDO app.
+            Create your todo list and remember the important points on the go...
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- <div class="justify-content-center col-md-12"> -->
+    <form #todolistTitle="ngForm" (ngSubmit)="todolistTitle.form.valid && onAddTitleToCategory(todolistTitle)"
+        (keydown.enter)="$event.preventDefault()">
+        <div class="row">
+            <div class="col-md-10">
+                <input type="text" placeholder="Add a title for ToDO list" name="todolistName"
+                    class="form-control-plaintext shadow-box" [(ngModel)]="todoListTitleName" required
+                    #todolisttitle="ngModel"
+                    [ngClass]="{'border-invalid' : todolisttitle.touched && todolisttitle.invalid}">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block shadow-box"
+                    [disabled]="todolistTitle.form.invalid">{{buttonName}}</button>
+            </div>
+            <div class="text-danger ml-3" *ngIf="todolisttitle.touched && todolisttitle.invalid">
+                ToDo List title is required
+            </div>
+        </div>
+    </form>
+    <!-- </div> -->
+</div>
+
+<div class="row categories-list">
+    <div class="col-md-3" *ngFor="let todocategory of todoListCategories">
+        <div class="card shadow-box" [style.background-color]="todocategory.data.colorcode">
+            <div class="card-body">
+                <div class="clearfix">
+                    <div class="float-start">
+                        <div class="badge bg-primary">CATEGORY</div>
+                    </div>
+                    <div class="float-end category-tools">
+                        <small><i class="fa fa-pencil-alt text-success"
+                                (click)="editTodoListTitle(todocategory.data.category,todocategory.id)"></i></small>
+                        <small><i class="fas fa-trash text-danger"
+                            (click)="deleteTodoList(todocategory.id,todocategory.data.category)"></i></small>
+                    </div>
+                </div>
+                <div class="todo-content">
+                    <h3>{{todocategory.data.category}}</h3>
+                    <small class="text-secondary">Lorem, ipsum dolor sit amet consectetur
+                        adipisicing elit. Error omnis dignissimos eveniet cum minus
+                        est harum quam. Debitis exercitationem incidunt magnam voluptas
+                        maiores, consectetur mollitia saepe accusamus repellat reiciendis
+                        quas?</small>
+                </div>
+                <span class="badge rounded-pill bg-danger">{{todocategory.data.todocount}}</span>
+            </div>
+        </div>
+    </div>
+</div>
