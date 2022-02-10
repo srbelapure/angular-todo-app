@@ -1,0 +1,9 @@
+In video
+https://www.youtube.com/watch?v=wINy6QWz3nA
+
+@ 2:52:21 we are updating todos counter --- Angular Firestore Increment
+
+* increment the counter when we add an item to our list
+* decrement the counter when we delete an item from the list
+
+@ 3:12:13 we are decrementing todo counter

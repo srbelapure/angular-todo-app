@@ -33,7 +33,7 @@
 
 <div class="row categories-list">
     <div class="col-md-3" *ngFor="let todocategory of todoListCategories">
-        <div class="card shadow-box" [style.background-color]="todocategory.data.colorcode">
+        <div class="card shadow-box" [style.background-color]="todocategory.data.colorcode" (click)="onSelectTodoList(todocategory.id)">
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start">
@@ -41,8 +41,10 @@
                     </div>
                     <div class="float-end category-tools">
                         <small><i class="fa fa-pencil-alt text-success"
+                            title="Edit the title of your todo list"
                                 (click)="editTodoListTitle(todocategory.data.category,todocategory.id)"></i></small>
                         <small><i class="fas fa-trash text-danger"
+                            title="Delete your todo list"
                             (click)="deleteTodoList(todocategory.id,todocategory.data.category)"></i></small>
                     </div>
                 </div>

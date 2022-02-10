@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { TodolistcategoryService } from '../service/todolistcategory.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class TodoCategoriesComponent implements OnInit {
   buttonName: string = 'Add'
 
 
-  constructor(private todolistCatService: TodolistcategoryService) { }
+  constructor(private todolistCatService: TodolistcategoryService,
+    private router:Router) { }
 
   ngOnInit(): void {
     this.todolistCatService.getTodoListsCategories().subscribe(item => {
@@ -52,6 +54,11 @@ export class TodoCategoriesComponent implements OnInit {
 
   deleteTodoList(id:string,listTitle:string){
     this.todolistCatService.deleteTodoListCategory(id,listTitle)
+  }
+
+  onSelectTodoList(id:string){
+    alert(id)
+    this.router.navigate(['/todo',id])
   }
 
 

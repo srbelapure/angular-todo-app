@@ -21,11 +21,12 @@
   cursor: pointer;
   /* margin-left: -30px; */
   /* height: 80px; */
-  width: 600px;
+  /* width: 600px; */
   /* padding: 1px 0px; */
   /* border-radius: 20px; */
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  background-color: #fffba9;
 }
 
 .todo-list .card:hover .todo-list-tools {
