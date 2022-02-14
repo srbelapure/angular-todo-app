@@ -3,6 +3,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 import { TodolistService } from '../service/todolist.service';
 import { NgForm } from '@angular/forms';
+import * as firebase from 'firebase/app'; 
+import 'firebase/firestore';
 
 @Component({
   selector: 'app-todo',
@@ -16,7 +18,6 @@ export class TodoComponent implements OnInit, OnDestroy {
   categoryTodoItemsList: Array<any> = [];
   buttonName: string = 'Add';
   idForUpdatingTodoItem: string = '';
-  // completedTodoItem
   isTodoItemChecked:boolean=false
 
 
@@ -50,7 +51,8 @@ export class TodoComponent implements OnInit, OnDestroy {
     if (this.buttonName === 'Add') {
       let todoItemData = {
         todo: formData.value.todoItemText,
-        iscompleted: false
+        iscompleted: false,
+        timestamp: new Date()
       }
       this.todolistService.saveTodoList(this.todoListCategoryId, todoItemData)
     }
@@ -69,16 +71,18 @@ export class TodoComponent implements OnInit, OnDestroy {
     console.log('id***', id)
   }
 
-  onDeleteTodoItem(id: string) {
-    this.todolistService.deleteTodoItem(this.todoListCategoryId, id)
+  onDeleteTodoItem(id: string,isItemCompleted:boolean) {
+    this.todolistService.deleteTodoItem(this.todoListCategoryId, id,isItemCompleted)
   }
 
-  onCompleteAction() {
-
+  onCompleteAction(isItemCompleted: boolean, id: string) {
+    this.isTodoItemChecked = !isItemCompleted
+    this.todolistService.markItemComplete(this.todoListCategoryId, id, this.isTodoItemChecked)
   }
 
-  onIncompleteAction() {
-
+  onIncompleteAction(isItemCompleted: boolean, id:string) {
+    this.isTodoItemChecked = !isItemCompleted
+    this.todolistService.markItemIncomplete(this.todoListCategoryId, id, this.isTodoItemChecked)
   }
 
   // ontodoItemChange(e: any) {

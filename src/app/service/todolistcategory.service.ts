@@ -19,7 +19,7 @@ export class TodolistcategoryService {
 
   getTodoListsCategories() {
     //get all the to-do lists from firestore
-    return this.angularfirestore.collection('categories').snapshotChanges().pipe(
+    return this.angularfirestore.collection('categories', ref => ref.orderBy('timestamp', 'desc')).snapshotChanges().pipe(
       map(
         actions => {
           return actions.map(item => {

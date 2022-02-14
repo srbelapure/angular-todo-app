@@ -10,11 +10,30 @@ import { TodolistcategoryService } from '../service/todolistcategory.service';
 })
 export class TodoCategoriesComponent implements OnInit {
 
-  color: Array<any> = ['#632626', '#9D5353', '#BF8B67', '#DACC96', '#95CD41', '#FF7F3F', '#EA5C2B', '#99A799', '#E2C2B9', '#91091E', '#BECA5C', '#EF8D32', '#CC561E', '#AA2B1D', '#534E52', '#965D62', '#C7956D', '#F2D974', '#F6AE99']
+  color: Array<any> = [
+      '#D9D7F1',
+      '#FFFDDE',
+      '#E7FBBE',
+      '#FFCBCB',
+      '#FFEDDB',
+      '#F7ECDE',
+      '#F0ECE3',
+      '#E6DF9A',
+      '#F3ED9E',
+      '#FFDCDC',
+      '#FBF8F1',
+      '#DFD3C3',
+      '#EFEFEF',
+      '#FFEFBC',
+      '#D1E9D2',
+      '#E5F4E7',
+      '#F1FDF3'
+  ]
   todoListCategories: Array<any> = []
   todoListTitleName: string = ''
   idForUpdatingTodoTitle:string=''
   buttonName: string = 'Add'
+  randomNumberForColor:number=0
 
 
   constructor(private todolistCatService: TodolistcategoryService,
@@ -32,10 +51,16 @@ export class TodoCategoriesComponent implements OnInit {
 
       //generate a random number between 0 to length of color array to select a color from array randomly
       let randomNumberForColor = Math.floor(Math.random() * this.color.length)
+    //  this.randomNumberForColor++
+    //  if(this.randomNumberForColor === this.color.length){
+    //   this.randomNumberForColor = 0
+    //  }
+    //   console.log("this.randomNumberForColor",this.randomNumberForColor)
       let todoCategory = {
         category: formData.value.todolistName,
         colorcode: this.color[randomNumberForColor],
-        todocount: 0
+        todocount: 0,
+        timestamp: new Date()
       }
       this.todolistCatService.saveTodoListTitle(todoCategory)
     }
@@ -57,7 +82,6 @@ export class TodoCategoriesComponent implements OnInit {
   }
 
   onSelectTodoList(id:string){
-    alert(id)
     this.router.navigate(['/todo',id])
   }
 

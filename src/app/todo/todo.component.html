@@ -15,7 +15,7 @@
             <div class="col-md-10">
                 <input 
                 type="text" 
-                placeholder="Add ToDO's list Items here..." 
+                placeholder="Todo item" 
                 name="todoItemText"
                 class="form-control-plaintext shadow-box"
                 [(ngModel)]="todoitemvalue"
@@ -40,9 +40,10 @@
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start text-secondary checkbox">
-                        <i class="far fa-circle text-danger"></i>
-                        <i class="fas fa-check text-success"></i>
-                        {{listItem.data.todo}}
+                        <i *ngIf="listItem.data.iscompleted" class="far fa-check-circle text-success" (click)="onIncompleteAction(listItem.data.iscompleted,listItem.id)"></i>
+                        <i *ngIf="!listItem.data.iscompleted" class="far fa-circle text-danger" (click)="onCompleteAction(listItem.data.iscompleted,listItem.id)"></i>
+                        <span *ngIf="!listItem.data.iscompleted">{{listItem.data.todo}}</span>
+                        <span *ngIf="listItem.data.iscompleted"><del>{{listItem.data.todo}}</del></span>
                         <!-- <label (change)="ontodoItemChange($event)">
                             <input type="checkbox" name={{listItem.data.todo}} value={{listItem.data.todo}}>
                             <span *ngIf="isTodoItemChecked"><del>{{listItem.data.todo}}</del></span>
@@ -50,11 +51,10 @@
                         </label> -->
                     </div>
                     <div class="float-end">
-                        <i class="far fa-check-circle text-success" (click)="onCompleteAction()"></i>
-                        <i class="far fa-times-circle text-danger" (click)="onIncompleteAction()"></i>
+                        
                         <div class="todo-list-tools">
-                            <small><i class="fa fa-pencil-alt text-success" (click)="onEditTodoItem(listItem.data.todo,listItem.id)"></i></small>
-                            <small><i class="fas fa-trash text-danger" (click)="onDeleteTodoItem(listItem.id)"></i></small>
+                            <small *ngIf="!listItem.data.iscompleted"><i class="fa fa-pencil-alt text-success" (click)="onEditTodoItem(listItem.data.todo,listItem.id)"></i></small>
+                            <small><i class="fas fa-trash text-danger" (click)="onDeleteTodoItem(listItem.id,listItem.data.iscompleted)"></i></small>
                         </div>
                     </div>
                 </div>

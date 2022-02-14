@@ -18,7 +18,6 @@
 
 .categories-list .card:hover{
     cursor: pointer;
-    background-color: #f8f8f8;
 }
 
 .categories-list .card:hover .category-tools{
