@@ -15,15 +15,11 @@
             <div class="col-md-10">
                 <input type="text" placeholder="Todo list title" name="todolistName"
                     class="form-control-plaintext shadow-box" ngModel required
-                    #todolisttitle="ngModel"
-                    [ngClass]="{'border-invalid' : todolisttitle.touched && todolisttitle.invalid}">
+                    #todolisttitle="ngModel">
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block shadow-box"
                     [disabled]="todolistTitle.form.invalid">Add</button>
-            </div>
-            <div class="text-danger ml-3" *ngIf="todolisttitle.touched && todolisttitle.invalid">
-                ToDo List title is required
             </div>
         </div>
     </form>

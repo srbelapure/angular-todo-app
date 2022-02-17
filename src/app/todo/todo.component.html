@@ -17,17 +17,13 @@
                 placeholder="Todo item" 
                 name="todoItemText"
                 class="form-control-plaintext shadow-box"
-                [(ngModel)]="todoitemvalue"
+                ngModel
                 required
-                #itemtodo="ngModel"
-                [ngClass]="{'border-invalid' : itemtodo.touched && itemtodo.invalid}">
+                #itemtodo="ngModel">
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block shadow-box"
                 [disabled]="todolistItem.form.invalid">{{buttonName}}</button>
-            </div>
-            <div class="text-danger ml-3" *ngIf="itemtodo.touched && itemtodo.invalid">
-                Add an item to proceed
             </div>
         </div>
     </form>
