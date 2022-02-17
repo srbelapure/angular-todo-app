@@ -42,7 +42,6 @@ export class TodoComponent implements OnInit, OnDestroy {
     )
 
     this.todolistService.getListOfTodoItems(this.todoListCategoryId).subscribe((listItems) => {
-      console.log("listItems", listItems)
       this.categoryTodoItemsList = listItems
     })
   }
@@ -54,7 +53,8 @@ export class TodoComponent implements OnInit, OnDestroy {
         iscompleted: false,
         timestamp: new Date()
       }
-      this.todolistService.saveTodoList(this.todoListCategoryId, todoItemData)
+      let newlycreatedcategory = false //this is to set that the category has/had an item in it so it is no more newly created
+      this.todolistService.saveTodoList(this.todoListCategoryId, todoItemData,newlycreatedcategory)
     }
     else if (this.buttonName === 'Edit') {
       this.todolistService.updateTodoItem(this.todoListCategoryId, this.idForUpdatingTodoItem, this.todoitemvalue)
@@ -68,7 +68,6 @@ export class TodoComponent implements OnInit, OnDestroy {
     this.buttonName = 'Edit'
     this.todoitemvalue = itemValue
     this.idForUpdatingTodoItem = id
-    console.log('id***', id)
   }
 
   onDeleteTodoItem(id: string,isItemCompleted:boolean) {

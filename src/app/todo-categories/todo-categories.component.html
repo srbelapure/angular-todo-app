@@ -14,13 +14,13 @@
         <div class="row">
             <div class="col-md-10">
                 <input type="text" placeholder="Todo list title" name="todolistName"
-                    class="form-control-plaintext shadow-box" [(ngModel)]="todoListTitleName" required
+                    class="form-control-plaintext shadow-box" ngModel required
                     #todolisttitle="ngModel"
                     [ngClass]="{'border-invalid' : todolisttitle.touched && todolisttitle.invalid}">
             </div>
             <div class="col-md-2">
                 <button type="submit" class="btn btn-primary col-md-2 btn-todo btn-block shadow-box"
-                    [disabled]="todolistTitle.form.invalid">{{buttonName}}</button>
+                    [disabled]="todolistTitle.form.invalid">Add</button>
             </div>
             <div class="text-danger ml-3" *ngIf="todolisttitle.touched && todolisttitle.invalid">
                 ToDo List title is required
@@ -32,7 +32,7 @@
 
 <div class="row categories-list">
     <div class="col-md-3" *ngFor="let todocategory of todoListCategories">
-        <div class="card shadow-box" [style.background-color]="todocategory.data.colorcode">
+        <div class="card shadow-box" [style.background-color]="todocategory.data.colorcode" (click)="onSelectTodoList(todocategory.id)">
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start">
@@ -41,15 +41,35 @@
                     </div>
                     <div class="float-end category-tools">
                         <small><i class="fa fa-pencil-alt text-success"
-                            title="Edit the title of your todo list"
-                                (click)="editTodoListTitle(todocategory.data.category,todocategory.id)"></i></small>
+                            title="Edit the title of your todo list. Press Enter key to save the title after editing"
+                                (click)="editTodoListTitle($event,todocategory.data.category,todocategory.id)"></i></small>
                         <small><i class="fas fa-trash text-danger"
                             title="Delete your todo list"
-                            (click)="deleteTodoList(todocategory.id,todocategory.data.category)"></i></small>
+                            (click)="deleteTodoList($event,todocategory.id,todocategory.data.category)"></i></small>
                     </div>
                 </div>
-                <div class="todo-content" (click)="onSelectTodoList(todocategory.id)">
-                    <h3>{{todocategory.data.category}}</h3>
+                <div class="todo-content">
+                    <!-- <h3 
+                    [attr.contenteditable]="buttonName==='Edit' ? true : null"
+                    [attr.tabindex]="buttonName==='Edit' ? 0 : null"
+                    [ngStyle]="{'background-color':buttonName==='Edit' ? 'white'  : todocategory.data.colorcode }"
+                    > -->
+                    <h3 #test
+                    id="{{'test'+todocategory.id}}"
+                    (click)="createText($event,todocategory.data.category,todocategory.id,todocategory.data.colorcode)" 
+                    (keydown.enter)="onEnterPress($event)"
+                    (blur)="onSelectingNewTitle($event)"
+                    >
+                        {{todocategory.data.category || todoListTitleName}}
+                    </h3>
+                    <!-- <input 
+                    type="text" 
+                    placeholder="Todo list title" 
+                    name="todolistName"
+                    class="form-control-plaintext" 
+                    [(ngModel)]="todoListTitleName || todocategory.data.category"
+                    [style.background-color]="todocategory.data.colorcode"
+                    [ngStyle]="{'background-color':buttonName==='Edit' ? 'white'  : todocategory.data.colorcode }"> -->
                     <small class="text-secondary">
                         <!-- Lorem, ipsum dolor sit amet consectetur
                         adipisicing elit. Error omnis dignissimos eveniet cum minus
@@ -59,7 +79,8 @@
                     </small>
                 </div>
                 <span *ngIf="todocategory.data.todocount" class="badge rounded-pill bg-danger">{{todocategory.data.todocount}} - todo's remaining</span>
-                <span *ngIf="!todocategory.data.todocount" class="badge rounded-pill bg-success">Todo items completed</span>
+                <span *ngIf="!todocategory.data.todocount && !todocategory.data.newlycreatedcategory" class="badge rounded-pill bg-success">Todo items completed</span>
+                <span *ngIf="todocategory.data.newlycreatedcategory" class="badge rounded-pill bg-primary">Newly created category</span>
             </div>
         </div>
     </div>

@@ -33,11 +33,17 @@ export class TodolistcategoryService {
   }
 
   updateTodoListTitleName(updatedTitle: string, id: string) {
-    this.angularfirestore.doc('categories/' + id).update({
-      category: updatedTitle
+    let updatedTitleWithSpacesRemoved = updatedTitle.trim().replace(/&nbsp;/g, ''); //remove leading and trailing spaces
+    this.angularfirestore.collection('categories').doc(id).update({
+      category: updatedTitleWithSpacesRemoved
     }).then(() => {
       this.toastrService.success('Updated the List Title')
     })
+    // this.angularfirestore.doc('categories/' + id).update({
+    //   category: updatedTitle
+    // }).then(() => {
+    //   this.toastrService.success('Updated the List Title')
+    // })
   }
 
   deleteTodoListCategory(id: string, listTitle: string) {

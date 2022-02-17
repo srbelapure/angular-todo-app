@@ -1,0 +1,155 @@
+import { Component, ElementRef, OnInit , Renderer2, ViewChild, ViewChildren,QueryList } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TodolistcategoryService } from '../service/todolistcategory.service';
+
+@Component({
+  selector: 'app-todo-categories',
+  templateUrl: './todo-categories.component.html',
+  styleUrls: ['./todo-categories.component.css']
+})
+export class TodoCategoriesComponent implements OnInit {
+
+  color: Array<any> = [
+      '#D9D7F1',
+      '#FFFDDE',
+      '#E7FBBE',
+      '#FFCBCB',
+      '#FFEDDB',
+      '#F7ECDE',
+      '#F0ECE3',
+      '#E6DF9A',
+      '#F3ED9E',
+      '#FFDCDC',
+      '#FBF8F1',
+      '#DFD3C3',
+      '#EFEFEF',
+      '#FFEFBC',
+      '#D1E9D2',
+      '#E5F4E7',
+      '#F1FDF3'
+  ]
+  todoListCategories: Array<any> = []
+  todoListTitleName: string = ''
+  idForUpdatingTodoTitle:string=''
+  buttonName: string = 'Add'
+  randomNumberForColor:number=0
+  dynamicItemFromQueryList:ElementRef
+  editCategoryTitleMode:boolean=false
+
+  // @ViewChild('test', { static: false }) test: ElementRef;
+  @ViewChildren('test') private test: QueryList<ElementRef>;
+
+
+  constructor(private todolistCatService: TodolistcategoryService,
+    private router:Router, 
+    private el: ElementRef, 
+      private renderer:Renderer2) { }
+
+  ngOnInit(): void {
+    this.todolistCatService.getTodoListsCategories().subscribe(item => {
+      this.todoListCategories = item
+    })
+  }
+
+  onAddTitleToCategory(formData: NgForm) {
+    if (this.buttonName === 'Add') {
+      /*If we are adding new Todo list name,then enter if loop*/
+
+      //generate a random number between 0 to length of color array to select a color from array randomly
+      let randomNumberForColor = Math.floor(Math.random() * this.color.length)
+    //  this.randomNumberForColor++
+    //  if(this.randomNumberForColor === this.color.length){
+    //   this.randomNumberForColor = 0
+    //  }
+    //   console.log("this.randomNumberForColor",this.randomNumberForColor)
+      let todoCategory = {
+        category: formData.value.todolistName,
+        colorcode: this.color[randomNumberForColor],
+        todocount: 0,
+        timestamp: new Date()
+      }
+      this.todolistCatService.saveTodoListTitle(todoCategory)
+    }
+    else if (this.buttonName === 'Edit') {
+      this.todolistCatService.updateTodoListTitleName(this.todoListTitleName, this.idForUpdatingTodoTitle)
+      this.buttonName = 'Add'
+    }
+    formData.reset()
+  }
+
+  editTodoListTitle(title: string, id: string) {
+    //this.buttonName = 'Edit'
+    //this.todoListTitleName = title
+    this.idForUpdatingTodoTitle = id
+    this.createText(this.todoListTitleName,this.idForUpdatingTodoTitle,'')
+  }
+
+  deleteTodoList(id:string,listTitle:string){
+    this.todolistCatService.deleteTodoListCategory(id,listTitle)
+  }
+
+  onSelectTodoList(id:string){
+    // this.router.navigate(['/todo',id])
+  }
+
+  createText(title: string, id: string, color: string) {
+    // const text = this.renderer.createText('Example of Create Text');
+    // this.renderer.appendChild(this.test.nativeElement, text);
+    console.log("title,id,colorcode", title, 'test' + id, color)
+    console.log("test", this.test.toArray())
+    
+    this.idForUpdatingTodoTitle = id
+
+    let elements = this.test.toArray()
+    elements.forEach(item => {
+      if ('test' + id === item.nativeElement.id) {
+        console.log(item.nativeElement.innerHTML)
+        this.dynamicItemFromQueryList=item
+        console.log("this.dynamicItemFromQueryList",this.dynamicItemFromQueryList)
+        this.todoListTitleName = item.nativeElement.innerHTML.trim()
+        this.renderer.setAttribute(item.nativeElement, 'contenteditable', 'true');
+        this.renderer.setAttribute(item.nativeElement, 'autofocus', 'true');
+        this.renderer.setStyle(item.nativeElement, 'background-color', color);
+        this.renderer.setStyle(item.nativeElement, 'outline', 'none');
+        this.renderer.setStyle(item.nativeElement, 'border', '1px solid');
+        this.editCategoryTitleMode = true
+      }
+      else {
+        console.log("noooooooooooooooooooooooo")
+      }
+    });
+    console.log("this.todoListTitleName", this.todoListTitleName)
+    console.log("this.dynamicItemFromQueryList_in_createtext",this.dynamicItemFromQueryList.nativeElement.innerHTML)
+    // this.renderer.setAttribute(this.test.nativeElement, 'contenteditable', 'true' );
+    // this.renderer.setStyle(this.test.nativeElement, 'background-color', color );
+    // this.renderer.setStyle(this.test.nativeElement, 'outline', 'none' );
+    // this.renderer.setStyle(this.test.nativeElement, 'border', '1px solid' );
+  }
+
+   onEnterPress(e:any){
+    this.todoListTitleName = e.target.innerHTML.trim()
+     console.log("on press enter",e.target.innerHTML)
+     console.log("this.dynamicItemFromQueryList_on_enter_press",this.dynamicItemFromQueryList.nativeElement.innerHTML)
+     console.log("this.idForUpdatingTodoTitlethis.idForUpdatingTodoTitle",this.todoListTitleName, this.idForUpdatingTodoTitle)
+    //  console.log('updated value',this.test.nativeElement.innerHTML)
+     this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'border')
+     this.editCategoryTitleMode = false
+     this.todolistCatService.updateTodoListTitleName(this.todoListTitleName, this.idForUpdatingTodoTitle)
+    //  this.renderer.removeStyle(this.test.nativeElement, 'border')
+     
+    //  this.renderer.removeStyle(this.test.nativeElement, 'color')
+    //  this.renderer.removeStyle(this.test.nativeElement, 'color')
+   }
+
+   closeChanges(e:Event){
+     console.log("this.editCategoryTitleMode",this.editCategoryTitleMode)
+     console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7')
+    //  if(this.editCategoryTitleMode){
+      this.renderer.removeAttribute(this.dynamicItemFromQueryList.nativeElement, 'contenteditable' );
+      this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'border')
+      
+    //  }
+     
+   }
+}

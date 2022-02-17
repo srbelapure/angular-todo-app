@@ -26,10 +26,11 @@ export class TodolistService {
     )
   }
 
-  saveTodoList(id: string, data: any) {
+  saveTodoList(id: string, data: any,newlycreatedcategory:boolean) {
     this.angularfirestore.collection('categories').doc(id).collection('todolist').add(data).then(ref => {
       this.angularfirestore.doc('categories/'+id).update({
-        todocount: increment(1)
+        todocount: increment(1),
+        newlycreatedcategory:newlycreatedcategory
       })
       this.toastrService.success('New TO-DO item Added Successfully')
     })
@@ -45,7 +46,6 @@ export class TodolistService {
 
   deleteTodoItem(categoryId: string, itemId: string, isItemCompleted:boolean) {
     this.angularfirestore.collection('categories').doc(categoryId).collection('todolist').doc(itemId).delete().then(() => {
-      console.log("isItemCompletedisItemCompleted",isItemCompleted)
       if(!isItemCompleted){
         this.angularfirestore.doc('categories/'+categoryId).update({
           todocount: increment(-1)

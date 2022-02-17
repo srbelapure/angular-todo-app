@@ -1,9 +1,8 @@
 <div class="row justify-content-center mb-3">
     <div class="col-md-4 text-center">
-        <h1>TODO LIST</h1>
-        <p class="text-info">
-            This is our ToDO app.
-            Create your todo list and remember the important points on the go...
+        <h1><i class="fas fa-clipboard-list" style="color: #919143;"></i></h1>
+        <p style="color: #919143;">
+            Orgainze your routine with a ToDO List
         </p>
     </div>
 </div>
@@ -40,15 +39,28 @@
             <div class="card-body">
                 <div class="clearfix">
                     <div class="float-start text-secondary checkbox">
-                        <i *ngIf="listItem.data.iscompleted" class="far fa-check-circle text-success" (click)="onIncompleteAction(listItem.data.iscompleted,listItem.id)"></i>
+                        <!-- <i *ngIf="listItem.data.iscompleted" class="far fa-check-circle text-success" (click)="onIncompleteAction(listItem.data.iscompleted,listItem.id)"></i>
                         <i *ngIf="!listItem.data.iscompleted" class="far fa-circle text-danger" (click)="onCompleteAction(listItem.data.iscompleted,listItem.id)"></i>
                         <span *ngIf="!listItem.data.iscompleted">{{listItem.data.todo}}</span>
-                        <span *ngIf="listItem.data.iscompleted"><del>{{listItem.data.todo}}</del></span>
+                        <span *ngIf="listItem.data.iscompleted"><del>{{listItem.data.todo}}</del></span> -->
+
                         <!-- <label (change)="ontodoItemChange($event)">
                             <input type="checkbox" name={{listItem.data.todo}} value={{listItem.data.todo}}>
                             <span *ngIf="isTodoItemChecked"><del>{{listItem.data.todo}}</del></span>
                             <span *ngIf="!isTodoItemChecked">{{listItem.data.todo}}</span>
                         </label> -->
+
+                        <span *ngIf="!listItem.data.iscompleted" (click)="onCompleteAction(listItem.data.iscompleted,listItem.id)">
+                            <i *ngIf="!listItem.data.iscompleted" class="far fa-circle text-danger"></i>
+                            {{listItem.data.todo}}
+                        </span>
+
+                        <span *ngIf="listItem.data.iscompleted" (click)="onIncompleteAction(listItem.data.iscompleted,listItem.id)">
+                            <i *ngIf="listItem.data.iscompleted" class="far fa-check-circle text-success"></i>
+                            <del>{{listItem.data.todo}}</del>
+                        </span>
+
+
                     </div>
                     <div class="float-end">
                         
