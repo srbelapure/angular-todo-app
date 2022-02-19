@@ -31,7 +31,7 @@ input[type=text]{
   color: black !important;
   font-weight: 600 !important;
   border: none !important;
-  width: 10vw !important;
+  width: 100% !important;
 }
 
 .border-invalid{

@@ -32,7 +32,7 @@ export class TodolistService {
         todocount: increment(1),
         newlycreatedcategory:newlycreatedcategory
       })
-      this.toastrService.success('New TO-DO item Added Successfully')
+      this.toastrService.success('New Todo item Added Successfully')
     })
   }
 
@@ -40,7 +40,7 @@ export class TodolistService {
     this.angularfirestore.doc('categories/' + categoryId + '/todolist/' + itemId).update({
       todo: todoItemValue
     }).then(() => {
-      this.toastrService.success('Updated the item')
+      this.toastrService.success('Updated todo item')
     })
   }
 

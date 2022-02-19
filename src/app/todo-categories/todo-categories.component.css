@@ -4,7 +4,10 @@
     margin-top: 50px;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
-    
+}
+
+.card:hover .todo-content{
+    margin-bottom: 50px;
 }
 
 .category-tools{
@@ -26,4 +29,13 @@
 
 .bg-danger{
     margin-top: 10px;
+}
+
+.category-title{
+    margin-bottom: 5px;
+}
+
+.todo-content{
+    margin-bottom: 20px;
+    transition: 0.8s;
 }

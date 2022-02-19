@@ -13,7 +13,7 @@ export class TodolistcategoryService {
 
   saveTodoListTitle(data: any) {
     this.angularfirestore.collection('categories').add(data).then(ref => {
-      this.toastrService.success('New TO-DO list Title Added Successfully')
+      this.toastrService.success('New Todo Category created successfully')
     })
   }
 
@@ -37,7 +37,7 @@ export class TodolistcategoryService {
     this.angularfirestore.collection('categories').doc(id).update({
       category: updatedTitleWithSpacesRemoved
     }).then(() => {
-      this.toastrService.success('Updated the List Title')
+      this.toastrService.success('Updated category title')
     })
     // this.angularfirestore.doc('categories/' + id).update({
     //   category: updatedTitle
@@ -54,7 +54,7 @@ export class TodolistcategoryService {
     // })
 
     this.angularfirestore.doc('categories/' + id).delete().then(() => {
-      this.toastrService.error('ToDO list' + ' ' + listTitle + ' ' + 'deleted successfully')
+      this.toastrService.error('Todo list' + ' ' +  '\"' + listTitle + '\"' + ' ' + 'deleted successfully')
     })
   }
 }

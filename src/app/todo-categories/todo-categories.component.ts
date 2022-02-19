@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit , Renderer2, ViewChild, ViewChildren,QueryList } from '@angular/core';
+import { Component, ElementRef, OnInit , Renderer2} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -33,7 +33,6 @@ export class TodoCategoriesComponent implements OnInit {
   todoListCategories: Array<any> = []
   todoListTitleName: string = ''
   idForUpdatingTodoTitle:string=''
-  // buttonName: string = 'Add'
   randomNumberForColor:number=0
   dynamicItemFromQueryList:ElementRef
   editCategoryTitleMode:boolean=false
@@ -42,8 +41,8 @@ export class TodoCategoriesComponent implements OnInit {
   isEnterKeyPressed:boolean=false
   anyKeyPressed:boolean=false
 
-  @ViewChild('test', { static: false }) testchild: ElementRef;
-  @ViewChildren('test') private test: QueryList<ElementRef>;
+  // @ViewChild('test', { static: false }) testchild: ElementRef;
+  // @ViewChildren('test') private test: QueryList<ElementRef>;
 
 
   constructor(private todolistCatService: TodolistcategoryService,
@@ -77,13 +76,11 @@ export class TodoCategoriesComponent implements OnInit {
     formData.reset()
   }
 
-  editTodoListTitle(e:Event, title: string, id: string) {
+  editTodoListTitle(e:any, title: string, id: string) {
     e.stopPropagation() //to allow editing of title and prevent page routing
 
-    //this.buttonName = 'Edit'
-    //this.todoListTitleName = title
     this.idForUpdatingTodoTitle = id
-    this.createText(e,this.todoListTitleName,this.idForUpdatingTodoTitle,'')
+    this.setChangesWithRenderer(e.path[3].children[1].children[0])
   }
 
   deleteTodoList(e:Event,id:string,listTitle:string){
@@ -91,35 +88,30 @@ export class TodoCategoriesComponent implements OnInit {
     this.todolistCatService.deleteTodoListCategory(id,listTitle)
   }
 
-  onSelectTodoList(id:string){
-    this.router.navigate(['/todo',id])
+  onSelectTodoList(id: string, categoryTitle: string) {
+    /**We can use state for NavigationExtras to transfer data from one page to another, or use a service, but this data is lost after refresh. So I have used a local storage */
+    // let navigationExtras:NavigationExtras={
+    //   state:{
+    //     categorytitle : categoryTitle
+    // }}
+    // this.CategorydataService.categoryTitle = categoryTitle
+
+    localStorage.setItem("categoryTitle", categoryTitle)
+    this.router.navigate(['/todo', id])
   }
 
-  createText(e:Event, title: string, id: string, color: string) {
-    e.stopPropagation() //to allow editing of title and prevent page routing
-    this.idForUpdatingTodoTitle = id
-
-    let elements = this.test.toArray()
-    elements.forEach(item => {
-      if ('test' + id === item.nativeElement.id) {
-        this.dynamicItemFromQueryList = item
-
-       this.todoListTitleName = item.nativeElement.innerHTML.trim().replace(/&nbsp;/g, '');
-
-        this.renderer.setAttribute(this.dynamicItemFromQueryList.nativeElement, 'contenteditable', 'true');
-        this.renderer.setAttribute(this.dynamicItemFromQueryList.nativeElement, 'autofocus', 'true');
-        this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'cursor', 'text');
-        this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'background-color', color);
-        this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'outline', 'none');
-        this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'border', '1px solid');
-
-        this.editCategoryTitleMode = true
-      }
-      else {
-        this.renderer.removeAttribute(item.nativeElement, 'contenteditable' );
-        this.renderer.removeStyle(item.nativeElement, 'border')
-      }
-    });
+  setChangesWithRenderer(e:any){
+    this.renderer.setAttribute(e, 'tabindex', '0');
+    this.renderer.setAttribute(e, 'contenteditable', 'true');
+    e.focus()
+    // this.renderer.setAttribute(e, 'autofocus', 'true');
+    this.renderer.setStyle(e, 'cursor', 'text');
+    this.renderer.setStyle(e, 'outline', 'none');
+    this.renderer.setStyle(e, 'border-bottom', '1px solid #919143');
+    this.renderer.setStyle(e, 'padding', '5px 0px');
+    this.renderer.setStyle(e, 'margin', '20px 0px');
+    
+    this.todoListTitleName = e.innerHTML.trim().replace(/&nbsp;/g, '');
 
     window.addEventListener("keydown",(e:any)=>{
       this.anyKeyPressed = true
@@ -130,6 +122,36 @@ export class TodoCategoriesComponent implements OnInit {
     })
   }
 
+  createText(e:any, title: string, id: string, color: string) {
+    e.stopPropagation() //to allow editing of title and prevent page routing
+    this.idForUpdatingTodoTitle = id
+    this.setChangesWithRenderer(e.path[0])
+
+    this.editCategoryTitleMode = true
+
+    // let elements = this.test.toArray()
+    // elements.forEach(item => {
+    //   if ('test' + id === item.nativeElement.id) {
+    //     this.dynamicItemFromQueryList = item
+
+    //    this.todoListTitleName = item.nativeElement.innerHTML.trim().replace(/&nbsp;/g, '');
+
+    //     this.renderer.setAttribute(this.dynamicItemFromQueryList.nativeElement, 'contenteditable', 'true');
+    //     this.renderer.setAttribute(this.dynamicItemFromQueryList.nativeElement, 'autofocus', 'true');
+    //     this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'cursor', 'text');
+    //     this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'background-color', color);
+    //     this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'outline', 'none');
+    //     this.renderer.setStyle(this.dynamicItemFromQueryList.nativeElement, 'border', '1px solid');
+
+    //     this.editCategoryTitleMode = true
+    //   }
+    //   else {
+    //     this.renderer.removeAttribute(item.nativeElement, 'contenteditable' );
+    //     this.renderer.removeStyle(item.nativeElement, 'border')
+    //   }
+    // });
+  }
+
   onEnterPress(e: any) {
     this.isEnterKeyPressed=true
 
@@ -137,9 +159,11 @@ export class TodoCategoriesComponent implements OnInit {
 
     this.todoListTitleName = e.target.innerHTML.trim().replace(/&nbsp;/g, '');
 
-    this.renderer.removeAttribute(this.dynamicItemFromQueryList.nativeElement, 'contenteditable' );
-    this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'border')
-    this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'cursor')
+    // this.renderer.removeAttribute(e.currentTarget, 'contenteditable' );
+    // this.renderer.removeStyle(e.currentTarget, 'border')
+    // this.renderer.removeStyle(e.currentTarget, 'cursor')
+
+    this.removeTheRendererProperties(e)
 
     this.editCategoryTitleMode = false
 
@@ -153,7 +177,7 @@ export class TodoCategoriesComponent implements OnInit {
     }
     else{
       this.toastrService.warning('Category title is same as earlier title')
-      this.renderer.setProperty(this.dynamicItemFromQueryList.nativeElement, 'innerHTML', this.todoListTitleName.trim().replace(/&nbsp;/g, ''));
+      this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoListTitleName.trim().replace(/&nbsp;/g, ''));
       this.isEnterKeyPressed=false
     }
 
@@ -168,22 +192,41 @@ export class TodoCategoriesComponent implements OnInit {
       if (confirmBox) {
         this.editCategoryTitleMode = false
         this.todoListTitleName = e.target.innerHTML.trim().replace(/&nbsp;/g, '');
-        this.renderer.removeAttribute(this.dynamicItemFromQueryList.nativeElement, 'contenteditable' );
-        this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'border')
-        this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'cursor')
+
+        this.removeTheRendererProperties(e)
+
+        // this.renderer.removeAttribute(e.currentTarget, 'contenteditable' );
+        // this.renderer.removeStyle(e.currentTarget, 'border')
+        // this.renderer.removeStyle(e.currentTarget, 'cursor')
+
         if (istitleChanged && this.anyKeyPressed) {
           this.todolistCatService.updateTodoListTitleName(this.todoListTitleName, this.idForUpdatingTodoTitle)
         }
         else{
           this.toastrService.warning('Category title is same as earlier title')
-          this.renderer.setProperty(this.dynamicItemFromQueryList.nativeElement, 'innerHTML', this.todoListTitleName.trim().replace(/&nbsp;/g, ''));
+          this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoListTitleName.trim().replace(/&nbsp;/g, ''));
         }
       } else {
-      this.renderer.setProperty(this.dynamicItemFromQueryList.nativeElement, 'innerHTML', this.todoListTitleName.trim().replace(/&nbsp;/g, ''));
-      this.renderer.removeAttribute(this.dynamicItemFromQueryList.nativeElement, 'contenteditable' );
-      this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'border')
-      this.renderer.removeStyle(this.dynamicItemFromQueryList.nativeElement, 'cursor')
+      this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoListTitleName.trim().replace(/&nbsp;/g, ''));
+
+      this.removeTheRendererProperties(e)
+
+      // this.renderer.removeAttribute(e.currentTarget, 'contenteditable' );
+      // this.renderer.removeStyle(e.currentTarget, 'border')
+      // this.renderer.removeStyle(e.currentTarget, 'cursor')
       }
     }
+  }
+
+  removeTheRendererProperties(e:any){
+    this.renderer.removeAttribute(e.target, 'tabindex');
+    this.renderer.removeAttribute(e.target, 'contenteditable');
+    e.target.blur()
+    // this.renderer.setAttribute(e, 'autofocus', 'true');
+    this.renderer.removeStyle(e.target, 'cursor');
+    this.renderer.removeStyle(e.target, 'outline');
+    this.renderer.removeStyle(e.target, 'border-bottom');
+    this.renderer.removeStyle(e.target, 'padding');
+    this.renderer.removeStyle(e.target, 'margin');
   }
 }
