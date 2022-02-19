@@ -13,6 +13,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { TodoCategoriesComponent } from './todo-categories/todo-categories.component';
 import { TodoComponent } from './todo/todo.component';
+import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TodoComponent } from './todo/todo.component';
     HeaderComponent,
     FooterComponent,
     TodoCategoriesComponent,
-    TodoComponent
+    TodoComponent,
+    PagenotfoundComponent
   ],
   imports: [
     BrowserModule,
