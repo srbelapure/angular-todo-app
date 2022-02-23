@@ -51,7 +51,7 @@
                     (keydown.enter)="onEnterPress($event)"
                     (blur)="onSelectingNewTitle($event)"
                     >
-                        {{todocategory.data.category || todoListTitleName}}
+                        {{(todocategory.data.category || todoListTitleName) | removespaces}}
                     </span>
                     <!-- <input 
                     type="text" 

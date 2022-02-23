@@ -17,22 +17,37 @@
   cursor: pointer;
 }
 
-.todo-list .card:hover {
-  cursor: pointer;
-  /* margin-left: -30px; */
-  /* height: 80px; */
-  /* width: 600px; */
-  /* padding: 1px 0px; */
-  /* border-radius: 20px; */
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  background-color: #fffba9;
-}
-
-.todo-list .card:hover .todo-list-tools {
-  display: inline;
-}
-
 i {
   margin-right: 20px;
+}
+
+.todo-item-name{
+  margin-bottom: 5px;
+}
+
+
+/* smartphones, touchscreens */
+@media (hover: none) and (pointer: coarse) {
+  .todo-list .card .todo-list-tools {
+    display: inline;
+  }
+}
+
+/* mouse, touch pad */
+@media (hover: hover) and (pointer: fine) {
+  .todo-list .card:hover {
+    cursor: pointer;
+    /* margin-left: -30px; */
+    /* height: 80px; */
+    /* width: 600px; */
+    /* padding: 1px 0px; */
+    /* border-radius: 20px; */
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: #fffba9;
+  }
+
+  .todo-list .card:hover .todo-list-tools {
+    display: inline;
+  }
 }

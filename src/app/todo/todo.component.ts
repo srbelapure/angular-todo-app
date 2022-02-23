@@ -112,7 +112,7 @@ export class TodoComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(e, 'border-bottom', '1px solid #919143');
     this.renderer.setStyle(e, 'padding', '5px');
     
-    this.todoitemvalue = e.innerHTML.trim().replace(/&nbsp;/g, '');
+    this.todoitemvalue = e.innerHTML;
     
     window.addEventListener("keydown",(e:any)=>{
       this.anyKeyPressed = true
@@ -133,9 +133,9 @@ export class TodoComponent implements OnInit, OnDestroy {
   onEnterPress(e: any) {
     this.isEnterKeyPressed=true
 
-    let istitleChanged = this.todoitemvalue.trim().replace(/&nbsp;/g, '') !== e.target.innerHTML.trim().replace(/&nbsp;/g, '') ? true : false
+    let istitleChanged = this.todoitemvalue !== e.target.innerHTML ? true : false
 
-    this.todoitemvalue = e.target.innerHTML.trim().replace(/&nbsp;/g, '');
+    this.todoitemvalue = e.target.innerHTML;
 
     // this.renderer.removeAttribute(e.currentTarget, 'contenteditable' );
     // this.renderer.removeStyle(e.currentTarget, 'border')
@@ -147,40 +147,40 @@ export class TodoComponent implements OnInit, OnDestroy {
       this.onSelectingNewTitle(e)
     })
 
-    if (istitleChanged && this.anyKeyPressed) {
+    if (istitleChanged) {
       this.todolistService.updateTodoItem(this.todoListCategoryId, this.idForUpdatingTodoItem, this.todoitemvalue)
       this.isEnterKeyPressed=false
     }
     else{
       this.toastrService.warning('Category title is same as earlier title')
-      this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoitemvalue.trim().replace(/&nbsp;/g, ''));
+      this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoitemvalue);
       this.isEnterKeyPressed=false
     }
 
   }
 
   onSelectingNewTitle(e: any){
-    let istitleChanged = this.todoitemvalue.trim().replace(/&nbsp;/g, '') !== e.target.innerHTML.trim().replace(/&nbsp;/g, '') ? true : false
+    let istitleChanged = this.todoitemvalue !== e.target.innerHTML ? true : false
     if(!this.isEnterKeyPressed){
       this.isEnterKeyPressed = false
       let confirmBox = confirm('your current title changes are not saved.\nPress OK to save the changes or Cancel to exit the changes')
       if (confirmBox) {
-        this.todoitemvalue = e.target.innerHTML.trim().replace(/&nbsp;/g, '');
+        this.todoitemvalue = e.target.innerHTML;
 
         this.removeTheRendererProperties(e)
 
         // this.renderer.removeAttribute(e.currentTarget, 'contenteditable' );
         // this.renderer.removeStyle(e.currentTarget, 'border')
         // this.renderer.removeStyle(e.currentTarget, 'cursor')
-        if (istitleChanged && this.anyKeyPressed) {
+        if (istitleChanged) {
           this.todolistService.updateTodoItem(this.todoListCategoryId, this.idForUpdatingTodoItem, this.todoitemvalue)
         }
         else{
           this.toastrService.warning('Category title is same as earlier title')
-          this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoitemvalue.trim().replace(/&nbsp;/g, ''));
+          this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoitemvalue);
         }
       } else {
-      this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoitemvalue.trim().replace(/&nbsp;/g, ''));
+      this.renderer.setProperty(e.currentTarget, 'innerHTML', this.todoitemvalue);
       this.removeTheRendererProperties(e)
       // this.renderer.removeAttribute(e.currentTarget, 'contenteditable' );
       // this.renderer.removeStyle(e.currentTarget, 'border')

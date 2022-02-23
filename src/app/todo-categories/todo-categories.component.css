@@ -6,9 +6,7 @@
     border-bottom-left-radius: 30px;
 }
 
-.card:hover .todo-content{
-    margin-bottom: 50px;
-}
+
 
 .category-tools{
     display: none;
@@ -19,13 +17,6 @@
     cursor: pointer;
 }
 
-.categories-list .card:hover{
-    cursor: pointer;
-}
-
-.categories-list .card:hover .category-tools{
-    display: inline;
-}
 
 .bg-danger{
     margin-top: 10px;
@@ -38,4 +29,69 @@
 .todo-content{
     margin-bottom: 20px;
     transition: 0.8s;
+}
+
+/* if devices have hover capability */
+/* @media (hover){
+    .card:hover .todo-content{
+        margin-bottom: 50px;
+    }
+
+    .categories-list .card:hover{
+        cursor: pointer;
+    }
+
+    .categories-list .card:hover .category-tools{
+        display: inline;
+    }
+} */
+
+/* if devices do no have hove capability(i.e; touchscreen devices) */
+/* @media (hover: none){
+    .categories-list .card .category-tools{
+        display: inline;
+    }
+} */
+
+/* @media (pointer: coarse){
+    .categories-list .card:hover .category-tools{
+        background-color: red;
+        display: inline;
+    }
+}
+
+@media (pointer: fine){
+    .categories-list .card:hover .category-tools{
+        background-color: yellow;
+        display: inline;
+    }
+}
+
+@media (pointer: none){
+    .categories-list .card:hover .category-tools{
+        background-color: green;
+        display: inline;
+    }
+} */
+
+/* smartphones, touchscreens */
+@media (hover: none) and (pointer: coarse) {
+    .categories-list .card .category-tools{
+        display: inline;
+    }
+}
+
+/* mouse, touch pad */
+@media (hover: hover) and (pointer: fine) {
+    .card:hover .todo-content{
+        margin-bottom: 50px;
+    }
+
+    .categories-list .card:hover{
+        cursor: pointer;
+    }
+
+    .categories-list .card:hover .category-tools{
+        display: inline;
+    }
 }

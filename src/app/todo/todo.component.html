@@ -10,7 +10,7 @@
 <div class="row">
     <form #todolistItem="ngForm" (ngSubmit)="todolistItem.form.valid && onAddItemToList(todolistItem)">
         <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-10 todo-item-name">
                 <input 
                 type="text" 
                 placeholder="Todo item" 
@@ -42,8 +42,8 @@
                         (click)="createText($event,listItem.id)" 
                         (keydown.enter)="onEnterPress($event)"
                         (blur)="onSelectingNewTitle($event)"
-                        >{{listItem.data.todo}}</span>
-                        <span *ngIf="listItem.data.iscompleted"><del>{{listItem.data.todo}}</del></span>
+                        >{{listItem.data.todo | removespaces}}</span>
+                        <span *ngIf="listItem.data.iscompleted"><del>{{listItem.data.todo | removespaces}}</del></span>
 
                         <!-- <label (change)="ontodoItemChange($event)">
                             <input type="checkbox" name={{listItem.data.todo}} value={{listItem.data.todo}}>

@@ -14,6 +14,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { TodoCategoriesComponent } from './todo-categories/todo-categories.component';
 import { TodoComponent } from './todo/todo.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { RemovespacesPipe } from './removespaces.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     FooterComponent,
     TodoCategoriesComponent,
     TodoComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    RemovespacesPipe
   ],
   imports: [
     BrowserModule,

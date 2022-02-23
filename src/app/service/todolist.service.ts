@@ -13,7 +13,7 @@ export class TodolistService {
     private toastrService: ToastrService) { }
 
   getListOfTodoItems(id: string) {
-    return this.angularfirestore.collection('categories').doc(id).collection('todolist', ref => ref.orderBy('timestamp', 'desc')).snapshotChanges().pipe(
+    return this.angularfirestore.collection('categories').doc(id).collection('todolist', ref => ref.orderBy('timestamp', 'asc')).snapshotChanges().pipe(
       map(
         actions => {
           return actions.map(item => {
