@@ -11,7 +11,7 @@ body {
   background-size: cover;
   /* opacity: 1; */
 
-  --image-size-fitting: contain
+  --image-size-fitting: cover
 }
 
 .shadow-box {
@@ -40,27 +40,32 @@ input[type=text]{
   border: 2px solid red !important;
 }
 
+.card .todo-content{
+  width: 100%;
+}
+
 .card-body .todo-content span>img{
-  max-width: 10vw;
-  max-height: 10vh;
+  max-width: 100% !important;
   object-fit: var(--image-size-fitting);
 }
 
 .card-body .text-secondary span>img{
-  max-height: 5vh;
-  max-width: 5vw;
+  max-width: 80% !important;
   object-fit: var(--image-size-fitting);
 }
 
 .card-body .text-secondary span>del>img{
-  max-height: 5vh;
-  max-width: 5vw;
+  max-width: 80% !important;
   opacity: 0.5;
   object-fit: var(--image-size-fitting);
 }
 
 .title-of-selected-category>img{
-  max-height: 5vh;
-  max-width: 5vw;
+  max-height: 10vh;
+  max-width: 10vw;
   object-fit: var(--image-size-fitting);
+}
+
+.card-body .text-secondary span{
+  word-break: break-word;
 }
