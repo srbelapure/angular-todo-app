@@ -53,7 +53,8 @@ export class TodolistcategoryService {
     // })
 
     this.angularfirestore.doc('categories/' + id).delete().then(() => {
-      this.toastrService.error('Todo list' + ' ' +  '\"' + listTitle + '\"' + ' ' + 'deleted successfully')
+      // this.toastrService.error('Todo list' + ' ' +  '\"' + listTitle + '\"' + ' ' + 'deleted successfully')
+      this.toastrService.error('Todo list deleted successfully')
     })
   }
 }

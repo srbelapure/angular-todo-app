@@ -110,7 +110,7 @@ export class TodoComponent implements OnInit, OnDestroy {
     this.renderer.setStyle(e, 'cursor', 'text');
     this.renderer.setStyle(e, 'outline', 'none');
     this.renderer.setStyle(e, 'border-bottom', '1px solid #919143');
-    this.renderer.setStyle(e, 'padding', '5px');
+    // this.renderer.setStyle(e, 'padding', '5px');
     
     this.todoitemvalue = e.innerHTML;
     
@@ -126,7 +126,8 @@ export class TodoComponent implements OnInit, OnDestroy {
   createText(e:any,id: string) {
     this.idForUpdatingTodoItem = id
 
-    this.setChangesWithRenderer(e.path[0])
+    // this.setChangesWithRenderer(e.path[0])
+    this.setChangesWithRenderer(e.currentTarget)
 
   }
 

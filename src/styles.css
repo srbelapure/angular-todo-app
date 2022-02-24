@@ -10,6 +10,8 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   /* opacity: 1; */
+
+  --image-size-fitting: contain
 }
 
 .shadow-box {
@@ -36,4 +38,29 @@ input[type=text]{
 
 .border-invalid{
   border: 2px solid red !important;
+}
+
+.card-body .todo-content span>img{
+  max-width: 10vw;
+  max-height: 10vh;
+  object-fit: var(--image-size-fitting);
+}
+
+.card-body .text-secondary span>img{
+  max-height: 5vh;
+  max-width: 5vw;
+  object-fit: var(--image-size-fitting);
+}
+
+.card-body .text-secondary span>del>img{
+  max-height: 5vh;
+  max-width: 5vw;
+  opacity: 0.5;
+  object-fit: var(--image-size-fitting);
+}
+
+.title-of-selected-category>img{
+  max-height: 5vh;
+  max-width: 5vw;
+  object-fit: var(--image-size-fitting);
 }

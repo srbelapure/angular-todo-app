@@ -125,7 +125,9 @@ export class TodoCategoriesComponent implements OnInit {
   createText(e:any, title: string, id: string, color: string) {
     e.stopPropagation() //to allow editing of title and prevent page routing
     this.idForUpdatingTodoTitle = id
-    this.setChangesWithRenderer(e.path[0])
+
+    // this.setChangesWithRenderer(e.path[0])
+    this.setChangesWithRenderer(e.currentTarget) //changed this to currentTarget,because we may have image or any html tag as a entry in a string
 
     this.editCategoryTitleMode = true
 

@@ -15,6 +15,7 @@ import { TodoCategoriesComponent } from './todo-categories/todo-categories.compo
 import { TodoComponent } from './todo/todo.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { RemovespacesPipe } from './removespaces.pipe';
+import { BypassHTMLsanitizationPipe } from './bypass-htmlsanitization.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { RemovespacesPipe } from './removespaces.pipe';
     TodoCategoriesComponent,
     TodoComponent,
     PagenotfoundComponent,
-    RemovespacesPipe
+    RemovespacesPipe,
+    BypassHTMLsanitizationPipe
   ],
   imports: [
     BrowserModule,

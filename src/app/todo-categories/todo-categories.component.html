@@ -50,8 +50,9 @@
                     (click)="createText($event,todocategory.data.category,todocategory.id,todocategory.data.colorcode)" 
                     (keydown.enter)="onEnterPress($event)"
                     (blur)="onSelectingNewTitle($event)"
+                    [innerHTML]="(todocategory.data.category || todoListTitleName)| removespaces | bypassHTMLsanitization"
                     >
-                        {{(todocategory.data.category || todoListTitleName) | removespaces}}
+                        <!-- {{(todocategory.data.category || todoListTitleName) | removespaces}} -->
                     </span>
                     <!-- <input 
                     type="text" 
@@ -86,3 +87,11 @@
         </div>
     </div>
 </div>
+
+
+<!-- 
+    I have added:
+        [innerHTML]="todocategory.data.category"
+
+        to convert the string into html and also use the sanitize HTML pipe to prevent warnings
+ -->

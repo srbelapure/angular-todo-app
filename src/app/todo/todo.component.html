@@ -1,8 +1,8 @@
 <div class="row justify-content-center mb-3">
     <div class="col-md-8 text-center">
         <h1><i class="fas fa-clipboard-list"></i></h1>
-        <h3 style="text-align: center;word-wrap: break-word;">
-            {{categoryTitle | removespaces}}
+        <h3 class="title-of-selected-category" style="text-align: center;word-wrap: break-word;" [innerHTML]="categoryTitle | removespaces | bypassHTMLsanitization">
+            <!-- {{categoryTitle | removespaces}} -->
         </h3>
     </div>
 </div>
@@ -42,8 +42,13 @@
                         (click)="createText($event,listItem.id)" 
                         (keydown.enter)="onEnterPress($event)"
                         (blur)="onSelectingNewTitle($event)"
-                        >{{listItem.data.todo | removespaces}}</span>
-                        <span *ngIf="listItem.data.iscompleted"><del>{{listItem.data.todo | removespaces}}</del></span>
+                        [innerHTML]="listItem.data.todo | removespaces | bypassHTMLsanitization"
+                        >
+                        <!-- {{listItem.data.todo | removespaces}} -->
+                        </span>
+                        <span *ngIf="listItem.data.iscompleted">
+                            <del [innerHTML]="listItem.data.todo | removespaces | bypassHTMLsanitization"></del>
+                        </span>
 
                         <!-- <label (change)="ontodoItemChange($event)">
                             <input type="checkbox" name={{listItem.data.todo}} value={{listItem.data.todo}}>
