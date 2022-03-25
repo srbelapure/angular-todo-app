@@ -19,7 +19,17 @@ describe('FooterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create footer', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('header should have a title of Todo App', () => {
+    let footerValueOfh6Tag = fixture.debugElement.nativeElement.querySelector('footer .row div h6').innerHTML
+    expect(footerValueOfh6Tag).toEqual('Todo App')
+  });
+
+  it('header should have a title of Todo App', () => {
+    let footerValueOfpTag = fixture.debugElement.nativeElement.querySelector('footer .row div p').innerHTML
+    expect(footerValueOfpTag).toEqual('copyright © TODO App')
   });
 });

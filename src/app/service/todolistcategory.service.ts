@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { map } from 'rxjs/operators'
+import { interval } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,16 @@ export class TodolistcategoryService {
       // this.toastrService.error('Todo list' + ' ' +  '\"' + listTitle + '\"' + ' ' + 'deleted successfully')
       this.toastrService.error('Todo list deleted successfully')
     })
+  }
+}
+
+export class FaketestTodolistCatService {
+  getTodoListsCategories() {
+    return interval(1000).pipe(map(i =>
+      [{ data: { category: "abc", colorcode: "#F1FdF3", newlycreatedcategory: false, todocount: 3, timestamp: { nanoseconds: 29000000, seconds: 1646013569 } }, id: '123' },
+      { data: { category: "qwe", colorcode: "#F1FdF3", newlycreatedcategory: true, todocount: 2, timestamp: { nanoseconds: 29000000, seconds: 1746013569 } }, id: '456' },
+      { data: { category: "dfg", colorcode: "#F1FdF3", newlycreatedcategory: false, todocount: 5, timestamp: { nanoseconds: 29000000, seconds: 1946013569 } }, id: '789' },
+      ]
+    ))
   }
 }

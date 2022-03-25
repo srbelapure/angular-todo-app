@@ -1,0 +1,29 @@
+Unit testing is:
+Unit testing is a software development process in which the smallest testable parts of an application, called units, 
+are individually and independently scrutinized for proper operation. 
+This testing methodology is done during the development process by the software developers
+
+What is karma?
+
+What is Jasmine?
+
+
+There are basically 3 types of tests:
+Unit, Integration, End-to-end
+
+Unit Test: Here we test a component in isolation, without external resource(like file system, DB ,API end points)
+[In angular it is component]
+
+Integration Test: testing the component with external resources(like file system, DB ,API end points) 
+[In angular it is component + template]
+
+End-to-end  Test - test the application as a whole
+
+describe() defines a test suite[it is a group of related tests]
+it() defines a single test/spec
+ex:
+describr('a_name',()=>{
+    it('a_test_name',()=>{
+        
+    })
+})
